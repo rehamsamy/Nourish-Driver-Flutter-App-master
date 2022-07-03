@@ -9,6 +9,7 @@ import 'package:nourish_driver/app/data/models/update_profile_model.dart';
 import 'package:nourish_driver/app/data/remote_data_source/profile_apis.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/custom_input.dart';
+import 'package:nourish_driver/app/shared/custom_network_image.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
 
 import '../../../../app_theme.dart';
@@ -47,9 +48,14 @@ class ProfileView extends GetView<ProfileController> {
                           shape: BoxShape.circle,
                           color: greyColor,
                         ),
-                        child: Image.asset(
-                          Assets.kPlaceholder,
-                        ),
+                        child: CustomNetworkImage(
+                          height: 40,
+                          width: 40,
+                          imageUrl: controller.profileModel?.image??'',
+                          errorWidget: Image.asset(
+                            Assets.kPlaceholder,
+                          ), radius: 20,
+                        )
                       ),
                       PositionedDirectional(
                         bottom: 0,
