@@ -5,6 +5,12 @@ class OrderDetailsController extends GetxController {
   //TODO: Implement OrderDetailsController
   Map map=Get.arguments;
   OrderModel ? orderModel;
+  bool? noResponseRadio;
+  bool? outCoverageRadio;
+  bool ? otherRadio;
+  String ? radioVal;
+  int groupValue = -1;
+
 
   final count = 0.obs;
   @override
@@ -24,4 +30,9 @@ class OrderDetailsController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  setRadioSelected(val){
+groupValue=val;
+update();
+  }
 }

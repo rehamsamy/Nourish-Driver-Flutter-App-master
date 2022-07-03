@@ -13,6 +13,6 @@ NetworkService networkService = NetworkService(
 );
 
 class AppConstants {
-  static const String kBaseUrl = "api-driver.eat-nourish.com";
+  static const String kBaseUrl = "https://api-driver.eat-nourish.com/api/";
   const AppConstants._();
 }

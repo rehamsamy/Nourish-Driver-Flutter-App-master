@@ -10,7 +10,7 @@ class OrderApis{
     OrderModel orderModel = OrderModel();
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
-        type: NetworkRequestType.POST,
+        type: NetworkRequestType.GET,
         path: 'orders/$orderId',
         data: NetworkRequestBody.json(
           {},
