@@ -98,6 +98,7 @@ class LoginView extends GetView<LoginController> {
                     Get.snackbar(
                         "Login",'Login ===>  Success');
                   } else {
+                 //   Get.offAllNamed(Routes.HOME_SCREEN);
                     Get.snackbar(
                         "Login",login?.error??'error');
                   }

@@ -5,13 +5,16 @@ import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
 import 'package:nourish_driver/app/data/models/order_model.dart';
+import 'package:nourish_driver/app/data/models/orders_model.dart';
 import 'package:nourish_driver/app/data/remote_data_source/order_apis.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
 
 import '../../app_theme.dart';
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({Key? key}) : super(key: key);
+  final Data1 ordersData;
+  const OrderItem( {Key? key,required this.ordersData}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class OrderItem extends StatelessWidget {
               children: [
                 SizedBox(width: Get.width*0.55,
                   child: Text(
-                    "Client Name",
+                   ordersData.order?.user?.nameEn??"",
                     style: Get.textTheme.bodyText2,
                   ),
                 ),
@@ -75,7 +78,7 @@ class OrderItem extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          "+96855214755",
+                          ordersData.order?.user?.mobile??"",
                           style:
                               Get.textTheme.caption!.copyWith(color: blueGreyColor),
                         ),
@@ -100,7 +103,7 @@ class OrderItem extends StatelessWidget {
                         ),
                         Flexible(
                           child: Text(
-                            "${LocalKeys.kLocation.tr}: riyadh",
+                            "${LocalKeys.kLocation.tr}: ${ordersData?.order?.address?.area}",
                             style: Get.textTheme.caption!
                                 .copyWith(color: blueGreyColor),
                           ),

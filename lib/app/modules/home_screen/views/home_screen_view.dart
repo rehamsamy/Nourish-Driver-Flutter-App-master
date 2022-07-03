@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/orders_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/orders_apis.dart';
 import 'widgets/drawer.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -221,10 +223,31 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return const OrderItem();
+                      child: FutureBuilder(
+                        future: OrdersApis().getAllOrders(),
+                        builder: (_,snapshot){
+                          if(snapshot.hasData){
+                            List<Data1>? ordersList=snapshot.data as List<Data1>?  ;
+                            if(ordersList!.isNotEmpty){
+                             return ListView.builder(
+                               itemCount: ordersList.length,
+                                itemBuilder: (context, index) {
+                                  return  OrderItem( ordersData: ordersList[index]);
+                                },
+                              );
+                            }else{
+
+                              return const SizedBox(
+                                child: Center(child: Text('no orders found'),),
+                              );
+                            }
+                          }else{
+                            print('vvv3' + snapshot.toString());
+                            return  const SizedBox();
+
+                          }
                         },
+
                       ),
                     ),
                   ],

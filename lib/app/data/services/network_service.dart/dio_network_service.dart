@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get/get.dart';
 import 'package:nourish_driver/app/data/services/logging_interceptor.dart';
+import 'package:nourish_driver/app/data/services/shared_pref.dart';
 
 part 'dio_network_service.freezed.dart';
 
@@ -114,8 +116,10 @@ class NetworkService {
   Dio? _dio;
   final String baseUrl;
   final Map<String, String> _headers;
+  final String? token = Get.find<SharedPrefService>().getToken() ?? '';
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
+    _headers['Authorization']='Bearer $token';
     final dio = Dio()
       ..interceptors.add(dioLoggerInterceptor)
       ..options.baseUrl = baseUrl

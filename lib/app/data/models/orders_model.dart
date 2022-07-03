@@ -1,175 +1,104 @@
 class OrdersModel {
-  OrdersModel({
-      this.data,});
-
-  OrdersModel.fromJson(dynamic json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
   Data? data;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (data != null) {
-      map['data'] = data?.toJson();
-    }
-    return map;
+  OrdersModel({this.data});
+
+  OrdersModel.fromJson(Map<String, dynamic> json) {
+    this.data = json["data"] == null ? null : Data.fromJson(json["data"]);
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if(this.data != null)
+      data["data"] = this.data?.toJson();
+    return data;
+  }
 }
 
 class Data {
-  Data({
-      this.orders, 
-      this.deliveredCount, 
-      this.notDeliveredCount,});
-
-  Data.fromJson(dynamic json) {
-    orders = json['orders'] != null ? Orders.fromJson(json['orders']) : null;
-    deliveredCount = json['delivered_count'];
-    notDeliveredCount = json['not_delivered_count'];
-  }
   Orders? orders;
   int? deliveredCount;
   int? notDeliveredCount;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (orders != null) {
-      map['orders'] = orders?.toJson();
-    }
-    map['delivered_count'] = deliveredCount;
-    map['not_delivered_count'] = notDeliveredCount;
-    return map;
+  Data({this.orders, this.deliveredCount, this.notDeliveredCount});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    this.orders = json["orders"] == null ? null : Orders.fromJson(json["orders"]);
+    this.deliveredCount = json["delivered_count"];
+    this.notDeliveredCount = json["not_delivered_count"];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if(this.orders != null)
+      data["orders"] = this.orders?.toJson();
+    data["delivered_count"] = this.deliveredCount;
+    data["not_delivered_count"] = this.notDeliveredCount;
+    return data;
+  }
 }
 
 class Orders {
-  Orders({
-      this.ordersData,});
+  List<String>? keys;
+  List<List<Data1>>? data;
 
-  Orders.fromJson(dynamic json) {
-    if (json['7 صباحاً - 4 مساءً'] != null) {
-      ordersData = [];
-      json['7 صباحاً - 4 مساءً'].forEach((v) {
-        ordersData?.add(OrdersData.fromJson(v));
-      });
-    }
+  Orders({this.keys, this.data});
+
+  Orders.fromJson(Map<String, dynamic> json) {
+    this.keys = json["keys"]==null ? null : List<String>.from(json["keys"]);
+    this.data = (json["data"]==null ? null : (json["data"] as List).
+    map((e)=>e==null?[]:(e as List).map((e)=>Data1.fromJson(e)).toList()).toList())?.cast<List<Data1>>();
   }
-  List<OrdersData>? ordersData;
-
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (ordersData != null) {
-      map['7 صباحاً - 4 مساءً'] = ordersData?.map((v) => v.toJson()).toList();
-    }
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if(this.keys != null)
+      data["keys"] = this.keys;
+    if(this.data != null)
+      data["data"] = this.data?.map((e)=>e.map((e)=>e.toJson()).toList() ?? []).toList();
+    return data;
   }
-
 }
 
-class OrdersData {
-  OrdersData({
-      this.id, 
-      this.driverId, 
-      this.orderId, 
-      this.driverName, 
-      this.order,});
-
-  OrdersData.fromJson(dynamic json) {
-    id = json['id'];
-    driverId = json['driver_id'];
-    orderId = json['order_id'];
-    driverName = json['driver_name'];
-    order = json['order'] != null ? Order.fromJson(json['order']) : null;
-  }
+class Data1 {
   int? id;
   int? driverId;
   int? orderId;
   String? driverName;
   Order? order;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['driver_id'] = driverId;
-    map['order_id'] = orderId;
-    map['driver_name'] = driverName;
-    if (order != null) {
-      map['order'] = order?.toJson();
-    }
-    return map;
+  Data1({this.id, this.driverId, this.orderId, this.driverName, this.order});
+
+  Data1.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.driverId = json["driver_id"];
+    this.orderId = json["order_id"];
+    this.driverName = json["driver_name"];
+    this.order = json["order"] == null ? null : Order.fromJson(json["order"]);
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["id"] = this.id;
+    data["driver_id"] = this.driverId;
+    data["order_id"] = this.orderId;
+    data["driver_name"] = this.driverName;
+    if(this.order != null)
+      data["order"] = this.order?.toJson();
+    return data;
+  }
 }
 
 class Order {
-  Order({
-      this.id, 
-      this.quantity, 
-      this.startDate, 
-      this.endDate, 
-      this.pausedAt, 
-      this.pauseCount, 
-      this.driverNote, 
-      this.status, 
-      this.resumeAt, 
-      this.deliveryType, 
-      this.branchId, 
-      this.userId, 
-      this.addressId, 
-      this.driverId, 
-      this.packageId, 
-      this.periodId, 
-      this.requested, 
-      this.totalWithoutVat, 
-      this.discountValue, 
-      this.totalWithVat, 
-      this.vat, 
-      this.paymentId, 
-      this.discountId, 
-      this.delivery, 
-      this.generatedCodeTLV, 
-      this.period,});
-
-  Order.fromJson(dynamic json) {
-    id = json['id'];
-    quantity = json['quantity'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    pausedAt = json['paused_at'];
-    pauseCount = json['pause_count'];
-    driverNote = json['driver_note'];
-    status = json['status'];
-    resumeAt = json['resume_at'];
-    deliveryType = json['delivery_type'];
-    branchId = json['branch_id'];
-    userId = json['user_id'];
-    addressId = json['address_id'];
-    driverId = json['driver_id'];
-    packageId = json['package_id'];
-    periodId = json['period_id'];
-    requested = json['requested'];
-    totalWithoutVat = json['total_without_vat'];
-    discountValue = json['discount_value'];
-    totalWithVat = json['total_with_vat'];
-    vat = json['vat'];
-    paymentId = json['payment_id'];
-    discountId = json['discount_id'];
-    delivery = json['delivery'];
-    generatedCodeTLV = json['generated_code_TLV'];
-    period = json['period'] != null ? Period.fromJson(json['period']) : null;
-  }
   int? id;
   String? quantity;
   String? startDate;
   String? endDate;
-  dynamic pausedAt;
+  dynamic? pausedAt;
   int? pauseCount;
-  dynamic driverNote;
+  dynamic? driverNote;
   String? status;
-  dynamic resumeAt;
+  dynamic? resumeAt;
   String? deliveryType;
   int? branchId;
   int? userId;
@@ -183,67 +112,84 @@ class Order {
   String? totalWithVat;
   String? vat;
   int? paymentId;
-  dynamic discountId;
+  dynamic? discountId;
   String? delivery;
-  dynamic generatedCodeTLV;
+  dynamic? generatedCodeTlv;
+  Address? address;
+  User? user;
   Period? period;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['quantity'] = quantity;
-    map['start_date'] = startDate;
-    map['end_date'] = endDate;
-    map['paused_at'] = pausedAt;
-    map['pause_count'] = pauseCount;
-    map['driver_note'] = driverNote;
-    map['status'] = status;
-    map['resume_at'] = resumeAt;
-    map['delivery_type'] = deliveryType;
-    map['branch_id'] = branchId;
-    map['user_id'] = userId;
-    map['address_id'] = addressId;
-    map['driver_id'] = driverId;
-    map['package_id'] = packageId;
-    map['period_id'] = periodId;
-    map['requested'] = requested;
-    map['total_without_vat'] = totalWithoutVat;
-    map['discount_value'] = discountValue;
-    map['total_with_vat'] = totalWithVat;
-    map['vat'] = vat;
-    map['payment_id'] = paymentId;
-    map['discount_id'] = discountId;
-    map['delivery'] = delivery;
-    map['generated_code_TLV'] = generatedCodeTLV;
-    if (period != null) {
-      map['period'] = period?.toJson();
-    }
-    return map;
+  Order({this.id, this.quantity, this.startDate, this.endDate, this.pausedAt, this.pauseCount, this.driverNote, this.status, this.resumeAt, this.deliveryType, this.branchId, this.userId, this.addressId, this.driverId, this.packageId, this.periodId, this.requested, this.totalWithoutVat, this.discountValue, this.totalWithVat, this.vat, this.paymentId, this.discountId, this.delivery, this.generatedCodeTlv, this.address, this.user, this.period});
+
+  Order.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.quantity = json["quantity"];
+    this.startDate = json["start_date"];
+    this.endDate = json["end_date"];
+    this.pausedAt = json["paused_at"];
+    this.pauseCount = json["pause_count"];
+    this.driverNote = json["driver_note"];
+    this.status = json["status"];
+    this.resumeAt = json["resume_at"];
+    this.deliveryType = json["delivery_type"];
+    this.branchId = json["branch_id"];
+    this.userId = json["user_id"];
+    this.addressId = json["address_id"];
+    this.driverId = json["driver_id"];
+    this.packageId = json["package_id"];
+    this.periodId = json["period_id"];
+    this.requested = json["requested"];
+    this.totalWithoutVat = json["total_without_vat"];
+    this.discountValue = json["discount_value"];
+    this.totalWithVat = json["total_with_vat"];
+    this.vat = json["vat"];
+    this.paymentId = json["payment_id"];
+    this.discountId = json["discount_id"];
+    this.delivery = json["delivery"];
+    this.generatedCodeTlv = json["generated_code_TLV"];
+    this.address = json["address"] == null ? null : Address.fromJson(json["address"]);
+    this.user = json["user"] == null ? null : User.fromJson(json["user"]);
+    this.period = json["period"] == null ? null : Period.fromJson(json["period"]);
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["id"] = this.id;
+    data["quantity"] = this.quantity;
+    data["start_date"] = this.startDate;
+    data["end_date"] = this.endDate;
+    data["paused_at"] = this.pausedAt;
+    data["pause_count"] = this.pauseCount;
+    data["driver_note"] = this.driverNote;
+    data["status"] = this.status;
+    data["resume_at"] = this.resumeAt;
+    data["delivery_type"] = this.deliveryType;
+    data["branch_id"] = this.branchId;
+    data["user_id"] = this.userId;
+    data["address_id"] = this.addressId;
+    data["driver_id"] = this.driverId;
+    data["package_id"] = this.packageId;
+    data["period_id"] = this.periodId;
+    data["requested"] = this.requested;
+    data["total_without_vat"] = this.totalWithoutVat;
+    data["discount_value"] = this.discountValue;
+    data["total_with_vat"] = this.totalWithVat;
+    data["vat"] = this.vat;
+    data["payment_id"] = this.paymentId;
+    data["discount_id"] = this.discountId;
+    data["delivery"] = this.delivery;
+    data["generated_code_TLV"] = this.generatedCodeTlv;
+    if(this.address != null)
+      data["address"] = this.address?.toJson();
+    if(this.user != null)
+      data["user"] = this.user?.toJson();
+    if(this.period != null)
+      data["period"] = this.period?.toJson();
+    return data;
+  }
 }
 
 class Period {
-  Period({
-      this.id, 
-      this.from, 
-      this.to, 
-      this.fromDescriptionEn, 
-      this.fromDescriptionAr, 
-      this.toDescriptionEn, 
-      this.toDescriptionAr, 
-      this.name,});
-
-  Period.fromJson(dynamic json) {
-    id = json['id'];
-    from = json['from'];
-    to = json['to'];
-    fromDescriptionEn = json['from_description_en'];
-    fromDescriptionAr = json['from_description_ar'];
-    toDescriptionEn = json['to_description_en'];
-    toDescriptionAr = json['to_description_ar'];
-    name = json['name'];
-  }
   int? id;
   String? from;
   String? to;
@@ -253,17 +199,139 @@ class Period {
   String? toDescriptionAr;
   String? name;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['from'] = from;
-    map['to'] = to;
-    map['from_description_en'] = fromDescriptionEn;
-    map['from_description_ar'] = fromDescriptionAr;
-    map['to_description_en'] = toDescriptionEn;
-    map['to_description_ar'] = toDescriptionAr;
-    map['name'] = name;
-    return map;
+  Period({this.id, this.from, this.to, this.fromDescriptionEn, this.fromDescriptionAr, this.toDescriptionEn, this.toDescriptionAr, this.name});
+
+  Period.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.from = json["from"];
+    this.to = json["to"];
+    this.fromDescriptionEn = json["from_description_en"];
+    this.fromDescriptionAr = json["from_description_ar"];
+    this.toDescriptionEn = json["to_description_en"];
+    this.toDescriptionAr = json["to_description_ar"];
+    this.name = json["name"];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["id"] = this.id;
+    data["from"] = this.from;
+    data["to"] = this.to;
+    data["from_description_en"] = this.fromDescriptionEn;
+    data["from_description_ar"] = this.fromDescriptionAr;
+    data["to_description_en"] = this.toDescriptionEn;
+    data["to_description_ar"] = this.toDescriptionAr;
+    data["name"] = this.name;
+    return data;
+  }
+}
+
+class User {
+  int? id;
+  String? nameEn;
+  String? email;
+  String? emailVerifiedAt;
+  dynamic? rememberToken;
+  String? type;
+  String? nameAr;
+  dynamic? image;
+  int? status;
+  String? mobile;
+  String? smsCode;
+  dynamic? emailVerifyCode;
+  int? verified;
+  dynamic? locale;
+  dynamic? deviceToken;
+
+  User({this.id, this.nameEn, this.email, this.emailVerifiedAt, this.rememberToken, this.type, this.nameAr, this.image, this.status, this.mobile, this.smsCode, this.emailVerifyCode, this.verified, this.locale, this.deviceToken});
+
+  User.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.nameEn = json["name_en"];
+    this.email = json["email"];
+    this.emailVerifiedAt = json["email_verified_at"];
+    this.rememberToken = json["remember_token"];
+    this.type = json["type"];
+    this.nameAr = json["name_ar"];
+    this.image = json["image"];
+    this.status = json["status"];
+    this.mobile = json["mobile"];
+    this.smsCode = json["sms_code"];
+    this.emailVerifyCode = json["email_verify_code"];
+    this.verified = json["verified"];
+    this.locale = json["locale"];
+    this.deviceToken = json["device_token"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["id"] = this.id;
+    data["name_en"] = this.nameEn;
+    data["email"] = this.email;
+    data["email_verified_at"] = this.emailVerifiedAt;
+    data["remember_token"] = this.rememberToken;
+    data["type"] = this.type;
+    data["name_ar"] = this.nameAr;
+    data["image"] = this.image;
+    data["status"] = this.status;
+    data["mobile"] = this.mobile;
+    data["sms_code"] = this.smsCode;
+    data["email_verify_code"] = this.emailVerifyCode;
+    data["verified"] = this.verified;
+    data["locale"] = this.locale;
+    data["device_token"] = this.deviceToken;
+    return data;
+  }
+}
+
+class Address {
+  int? id;
+  int? userId;
+  String? lat;
+  String? lng;
+  String? name;
+  String? addressType;
+  String? area;
+  String? building;
+  String? flat;
+  String? street;
+  String? postalCode;
+  String? additionalNumber;
+  dynamic? deliveryInstructions;
+
+  Address({this.id, this.userId, this.lat, this.lng, this.name, this.addressType, this.area, this.building, this.flat, this.street, this.postalCode, this.additionalNumber, this.deliveryInstructions});
+
+  Address.fromJson(Map<String, dynamic> json) {
+    this.id = json["id"];
+    this.userId = json["user_id"];
+    this.lat = json["lat"];
+    this.lng = json["lng"];
+    this.name = json["name"];
+    this.addressType = json["address_type"];
+    this.area = json["area"];
+    this.building = json["building"];
+    this.flat = json["flat"];
+    this.street = json["street"];
+    this.postalCode = json["postal_code"];
+    this.additionalNumber = json["additional_number"];
+    this.deliveryInstructions = json["delivery_instructions"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["id"] = this.id;
+    data["user_id"] = this.userId;
+    data["lat"] = this.lat;
+    data["lng"] = this.lng;
+    data["name"] = this.name;
+    data["address_type"] = this.addressType;
+    data["area"] = this.area;
+    data["building"] = this.building;
+    data["flat"] = this.flat;
+    data["street"] = this.street;
+    data["postal_code"] = this.postalCode;
+    data["additional_number"] = this.additionalNumber;
+    data["delivery_instructions"] = this.deliveryInstructions;
+    return data;
+  }
 }
