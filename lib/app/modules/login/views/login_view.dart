@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/forget_password_model.dart';
+import 'package:nourish_driver/app/data/models/login_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/auth_apis.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/custom_input.dart';
 import 'package:nourish_driver/app_theme.dart';
@@ -86,8 +89,19 @@ class LoginView extends GetView<LoginController> {
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
-                onPress: () {
-                  Get.offAllNamed(Routes.HOME_SCREEN);
+                onPress: () async{
+                  print("Login try");
+                  LoginModel? login =
+                  await AuthApis().loginUser(controller.phone.text,controller.password.text);
+                  if (login?.accessToken != null) {
+                    Get.offAllNamed(Routes.HOME_SCREEN);
+                    Get.snackbar(
+                        "Login",'Login ===>  Success');
+                  } else {
+                    Get.snackbar(
+                        "Login",login?.error??'error');
+                  }
+
                 },
               ),
             ),

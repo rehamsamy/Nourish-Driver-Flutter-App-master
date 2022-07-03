@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/delivery_status_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/delivery_status_api.dart';
 import 'widgets/bordered_container.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'widgets/not_delivered_actions_dialog.dart';
@@ -47,7 +49,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
               Padding(
                 padding: EdgeInsets.only(top: 15.h, bottom: 2.h),
                 child: Text(
-                  "Client Name",
+                 controller.orderModel?.data?.user?.nameEn??'',
                   style: Get.textTheme.bodyText2,
                 ),
               ),
@@ -90,7 +92,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                               );
                             },
                             child: Text(
-                              "+96855214755",
+                              controller.orderModel?.data?.user?.mobile??"",
                               style: Get.textTheme.caption!
                                   .copyWith(color: blueGreyColor),
                             ),
@@ -132,7 +134,7 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                         SizedBox(
                           width: Get.width * 0.55,
                           child: Text(
-                            "${LocalKeys.kLocation.tr}: riyadh",
+                            "${LocalKeys.kLocation.tr}:${controller.orderModel?.data?.address?.area??""}",
                             style: Get.textTheme.caption!
                                 .copyWith(color: blueGreyColor),
                           ),
@@ -253,7 +255,17 @@ class OrderDetailsView extends GetView<OrderDetailsController> {
                 ),
                 child: CustomButton(
                   title: LocalKeys.ksave.tr,
-                  onPress: () {},
+                  onPress: ()async {
+                    DeliveryStatusModel ? statusModel=await DeliveryStatusApis().changeDeliveryStatus(orderId: controller.orderModel?.data?.user?.id??0,
+                        status: 'delivered', reason:'delivered');
+                    if(statusModel?.data !=null){
+                      Get.back();
+                      Get.snackbar('Change Order Status', statusModel?.data?.msg??'Sucess');
+                    }else{
+                      Get.back();
+                      Get.snackbar('Change Order Status', statusModel?.data?.error??'Error occurred');
+                    }
+                  },
                 ),
               ),
             ],

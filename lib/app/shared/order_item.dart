@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/order_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/order_apis.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
 
 import '../../app_theme.dart';
@@ -14,8 +16,14 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(Routes.ORDER_DETAILS);
+      onTap: () async{
+       OrderModel ? orderModel= await OrderApis().getOrderDetails(4);
+       if(orderModel?.data !=null){
+         Get.toNamed(Routes.ORDER_DETAILS,arguments: {'orderModel':orderModel});
+       }else{
+         Get.snackbar('error', orderModel?.data?.error??'Error Occurred');
+       }
+
       },
       child: Container(
         width: 366.w,

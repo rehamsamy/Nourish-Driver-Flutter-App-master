@@ -5,6 +5,8 @@ import 'package:nourish_driver/app/core/values/assets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/forget_password_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/auth_apis.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/custom_input.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
@@ -58,8 +60,17 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
               padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
               child: CustomButton(
                 title: LocalKeys.ksave.tr,
-                onPress: () {
-                  Get.toNamed(Routes.OTP_VERIFICATION);
+                onPress: () async{
+                  ForgetPasswordModel? login =
+                  await AuthApis().forgetPassword(controller.email.text);
+                  if (login?.data != null) {
+                    Get.toNamed(Routes.OTP_VERIFICATION);
+                    Get.snackbar(
+                        "Forget Password",login?.data?.msg??'sucess');
+                  } else {
+                    Get.snackbar(
+                        "Forget Password",login?.data?.error??'error');
+                  }
                 },
               ),
             ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/delivery_status_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/delivery_status_api.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/custom_input.dart';
 
@@ -159,8 +161,15 @@ class NotDeliveredActionsDialog extends StatelessWidget {
               ),
               child: CustomButton(
                 title: LocalKeys.ksave.tr,
-                onPress: () {
-                  Get.back();
+                onPress: () async{
+                  DeliveryStatusModel ? statusModel=await DeliveryStatusApis().changeDeliveryStatus(orderId: 4, status: 'no', reason: _controller.text);
+                  if(statusModel?.data !=null){
+                    Get.back();
+                    Get.snackbar('Change Order Status', statusModel?.data?.msg??'Sucess');
+                  }else{
+                    Get.back();
+                    Get.snackbar('Change Order Status', statusModel?.data?.error??'Error occurred');
+                  }
                 },
               ),
             ),
