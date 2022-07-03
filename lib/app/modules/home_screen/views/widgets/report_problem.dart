@@ -33,6 +33,7 @@ class ReportProblemDialog extends StatelessWidget {
               ),
               child: TextFormField(
                 maxLines: 6,
+                controller: _controller,
                 style: Theme.of(context).textTheme.bodyText2,
                 decoration: InputDecoration(
                   hintText: LocalKeys.kDescription.tr,
