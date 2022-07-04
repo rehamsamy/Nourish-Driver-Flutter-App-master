@@ -12,7 +12,7 @@ import 'package:nourish_driver/routes/app_pages.dart';
 import '../../app_theme.dart';
 
 class OrderItem extends StatelessWidget {
-  final Data1 ordersData;
+  final Data1? ordersData;
   const OrderItem( {Key? key,required this.ordersData}) : super(key: key);
 
 
@@ -52,7 +52,7 @@ class OrderItem extends StatelessWidget {
               children: [
                 SizedBox(width: Get.width*0.55,
                   child: Text(
-                   ordersData.order?.user?.nameEn??"",
+                   ordersData?.order?.user?.nameEn??"",
                     style: Get.textTheme.bodyText2,
                   ),
                 ),
@@ -78,7 +78,7 @@ class OrderItem extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          ordersData.order?.user?.mobile??"",
+                          ordersData?.order?.user?.mobile??"",
                           style:
                               Get.textTheme.caption!.copyWith(color: blueGreyColor),
                         ),

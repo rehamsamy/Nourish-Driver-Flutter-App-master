@@ -125,7 +125,8 @@ class NetworkService {
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
       ..options.connectTimeout = 10000 // 10 seconds
-      ..options.receiveTimeout = 5000; // 5 seconds
+      ..options.receiveTimeout = 5000;
+    // 5 seconds
     return dio;
   }
 

@@ -9,16 +9,13 @@ class OrderApis{
   Future<OrderModel?> getOrderDetails(int orderId) async {
     OrderModel orderModel = OrderModel();
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    Get.log('cccccc  '+token.toString());
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
         path: 'orders/$orderId',
         data: NetworkRequestBody.json(
           {},
         ),
-        headers: {
-          'Authorization':
-          'Bearer $token'
-        }
     );
     NetworkResponse response = await networkService.execute(
       request,

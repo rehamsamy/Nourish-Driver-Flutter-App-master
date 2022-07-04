@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/services/localization_service.dart';
 import 'package:nourish_driver/app/data/services/shared_pref.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/selection_card.dart';
@@ -55,7 +56,7 @@ class ChooseLangView extends GetView<ChooseLangController> {
                 ),
               ),
               SelectionCard(
-                title: "English",
+                title: LocalizationService().isAr()?"العربية":'English',
                 image: Assets.kLang,
                 isSelected: !controller.isSelected.value,
                 onTap: () {
@@ -86,6 +87,7 @@ class ChooseLangView extends GetView<ChooseLangController> {
                       (!controller.isSelected.value &&
                           Get.locale!.languageCode != "en")) {
                     controller.onChangeLang();
+
                   }
                   Get.find<SharedPrefService>().saveIsFirstTime();
 

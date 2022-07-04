@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:nourish_driver/app/data/services/shared_pref.dart';
+import 'package:nourish_driver/routes/app_pages.dart';
 
 import '../app/modules/choose_lang/bindings/choose_lang_binding.dart';
 import '../app/modules/choose_lang/views/choose_lang_view.dart';
@@ -28,13 +30,17 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SPLASH;
+  static String token = Get.find<SharedPrefService>().getToken() ?? '';
+
+  static const INITIAL =Routes.SPLASH;
 
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => const SplashView(),
-      binding: SplashBinding(),
+      page: () => token == null ?  const SplashView() :   const HomeScreenView(),
+      binding: token == null ? SplashBinding() : HomeScreenBinding(),
+      // page: () => const SplashView(),
+      // binding: SplashBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN,

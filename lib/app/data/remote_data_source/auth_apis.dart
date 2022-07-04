@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/app_constants.dart';
 import 'package:nourish_driver/app/data/models/forget_password_model.dart';
 import 'package:nourish_driver/app/data/models/login_model.dart';
@@ -28,6 +29,8 @@ class AuthApis {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       SharedPrefService(prefs: prefs)
           .saveToken(loginModel.accessToken ?? '');
+      final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+      Get.log('token is '+token.toString());
       return data;
     }, noData: (info) {
       print('no data');

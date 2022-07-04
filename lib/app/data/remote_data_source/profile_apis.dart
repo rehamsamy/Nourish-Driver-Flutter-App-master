@@ -71,4 +71,40 @@ class ProfileApis {
     });
     return profileModel;
   }
+
+
+
+  Future<UpdateProfileModel?> resetPassword({
+    required String password,
+    required String confirmPassword,}) async {
+    UpdateProfileModel profileModel = UpdateProfileModel();
+    Map<String, dynamic>? map = {
+      'password': password,
+      'password_confirmation': confirmPassword,
+    };
+    final request = NetworkRequest(
+      type: NetworkRequestType.POST,
+      path: 'resetPassword',
+      data: NetworkRequestBody.json(
+       map,
+      ),
+
+    );
+    NetworkResponse response = await networkService.execute(
+      request,
+      UpdateProfileModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(ok: (data) {
+      profileModel = data;
+      return profileModel;
+    }, noData: (info) {
+      print('no data');
+      return null;
+    }, orElse: () {
+      print(response);
+      print("data");
+    });
+    return profileModel;
+  }
+
 }

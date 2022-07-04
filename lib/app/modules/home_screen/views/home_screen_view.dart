@@ -65,12 +65,13 @@ class HomeScreenView extends GetView<HomeScreenController> {
               width: Get.width,
               height: 53.h,
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: controller.keys?.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  Get.log('size is '+(controller.keys?.length.toString()).toString());
                   return Container(
                     decoration: BoxDecoration(
-                      color: index == 1 ? primaryColor : whiteColor,
+                      color: index == 0 ? primaryColor : whiteColor,
                       border: Border.all(color: blueGreyColor),
                       borderRadius: BorderRadius.circular(7.r),
                     ),
@@ -78,7 +79,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                     margin: EdgeInsets.symmetric(horizontal: 7.w),
                     padding: EdgeInsets.symmetric(horizontal: 12.5.w),
                     child: Text(
-                      "7:00 AM To 11:00 AM",
+                      controller.keys?[index]?? "",
                       style: Get.textTheme.headline3!.copyWith(
                         color: index == 1 ? whiteColor : blueGreyColor,
                       ),
@@ -223,32 +224,38 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       ),
                     ),
                     Expanded(
-                      child: FutureBuilder(
-                        future: OrdersApis().getAllOrders(),
-                        builder: (_,snapshot){
-                          if(snapshot.hasData){
-                            List<Data1>? ordersList=snapshot.data as List<Data1>?  ;
-                            if(ordersList!.isNotEmpty){
-                             return ListView.builder(
-                               itemCount: ordersList.length,
-                                itemBuilder: (context, index) {
-                                  return  OrderItem( ordersData: ordersList[index]);
-                                },
-                              );
-                            }else{
-
-                              return const SizedBox(
-                                child: Center(child: Text('no orders found'),),
-                              );
-                            }
-                          }else{
-                            print('vvv3' + snapshot.toString());
-                            return  const SizedBox();
-
-                          }
-                        },
-
-                      ),
+                      child:ListView.builder(
+                                 itemCount: controller.ordersList?.length,
+                                  itemBuilder: (context, index) {
+                                    return  OrderItem( ordersData: controller.ordersList?[index]);
+                                  },
+                                )
+                      // child: FutureBuilder(
+                      //   future: OrdersApis().getAllOrders(),
+                      //   builder: (_,snapshot){
+                      //     if(snapshot.hasData){
+                      //       List<Data1>? ordersList=snapshot.data as List<Data1>?  ;
+                      //       if(ordersList!.isNotEmpty){
+                      //        return ListView.builder(
+                      //          itemCount: ordersList.length,
+                      //           itemBuilder: (context, index) {
+                      //             return  OrderItem( ordersData: ordersList[index]);
+                      //           },
+                      //         );
+                      //       }else{
+                      //
+                      //         return const SizedBox(
+                      //           child: Center(child: Text('no orders found'),),
+                      //         );
+                      //       }
+                      //     }else{
+                      //       print('vvv3' + snapshot.toString());
+                      //       return  const SizedBox();
+                      //
+                      //     }
+                      //   },
+                      //
+                      // ),
                     ),
                   ],
                 ),

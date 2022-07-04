@@ -54,7 +54,8 @@ class OrdersView extends GetView<OrdersController> {
                   ),
                 ),
                 Expanded(
-                child:  FutureBuilder(
+                child:
+                FutureBuilder(
                     future: OrdersApis().getAllOrders(type:controller.selected.value==0?'delivered':'not_delivered'),
                     builder: (_,snapshot){
                       if(snapshot.hasData){

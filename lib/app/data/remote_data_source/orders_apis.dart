@@ -37,5 +37,36 @@ class OrdersApis{
     });
     return ordersList;
   }
+
+  Future<OrdersModel?> getOrders({String? type}) async {
+    OrdersModel ? ordersModel;
+
+    String path=type==null?'orders':type=='not_delivered'?
+    'orders/?status=$type':'orders?status=$type';
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: path,
+      data: NetworkRequestBody.json(
+        {},
+      ),
+    );
+    NetworkResponse response = await networkService.execute(
+      request,
+      OrdersModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(ok: (data) {
+      OrdersModel  ordersModel = data;
+      Get.log('size is '+(ordersModel.data?.orders?.keys?.length.toString()).toString());
+      return data;
+    }, noData: (info) {
+      print('no data');
+      return null;
+    }, orElse: () {
+      print(response);
+      print("data");
+    });
+    return ordersModel;
+  }
+
 }
 
