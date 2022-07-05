@@ -6,7 +6,6 @@ import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
 import 'package:nourish_driver/app/modules/home_screen/controllers/home_screen_controller.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
-
 import '../../../../../../../../app_theme.dart';
 import 'drawer_item.dart';
 
