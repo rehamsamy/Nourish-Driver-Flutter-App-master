@@ -11,8 +11,8 @@ List<Data1>? _ordersList;
 List<String>?_keys=[];
 int index=0;
 
-RxBool isSelected =
-Get.find<LocalizationService>().isAr() ? true.obs : false.obs;
+bool isSelected =
+Get.find<LocalizationService>().isAr() ? true : false;
 
 
 
