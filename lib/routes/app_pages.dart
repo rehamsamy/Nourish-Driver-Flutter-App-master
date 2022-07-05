@@ -34,11 +34,12 @@ class AppPages {
 
   static const INITIAL =Routes.SPLASH;
 
+
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => token == null ?  const SplashView() :   const HomeScreenView(),
-      binding: token == null ? SplashBinding() : HomeScreenBinding(),
+      page: () => token == '' ?  const SplashView() :   const HomeScreenView(),
+      binding: token == '' ? SplashBinding() : HomeScreenBinding(),
       // page: () => const SplashView(),
       // binding: SplashBinding(),
     ),

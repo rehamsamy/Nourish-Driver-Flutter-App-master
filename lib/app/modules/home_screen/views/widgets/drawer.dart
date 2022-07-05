@@ -117,20 +117,32 @@ class MainDrawer extends GetView<HomeScreenController> {
                               )
                             ],
                           ),
-                          Container(
-                            height: 32.h,
-                            width: 72.w,
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(5.r),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              Get.locale!.languageCode == "ar"
-                                  ? "English"
-                                  : "عربى",
-                              style: Get.textTheme.caption!
-                                  .copyWith(color: whiteColor),
+                          InkWell(
+                            onTap: (){
+                             // controller.isSelected.value = true;
+                              if ((controller.isSelected.value &&
+                                  Get.locale!.languageCode == "en") ||
+                                  (!controller.isSelected.value &&
+                                      Get.locale!.languageCode != "en")) {
+                                controller.onChangeLang();
+
+                              }
+                            },
+                            child: Container(
+                              height: 32.h,
+                              width: 72.w,
+                              decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(5.r),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                Get.locale!.languageCode == "en"
+                                    ? "English"
+                                    : "عربى",
+                                style: Get.textTheme.caption!
+                                    .copyWith(color: whiteColor),
+                              ),
                             ),
                           )
                         ],

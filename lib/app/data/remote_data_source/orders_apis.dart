@@ -55,9 +55,9 @@ class OrdersApis{
       OrdersModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(ok: (data) {
-      OrdersModel  ordersModel = data;
-      Get.log('size is '+(ordersModel.data?.orders?.keys?.length.toString()).toString());
-      return data;
+        ordersModel = data;
+      Get.log('size is xx '+(ordersModel?.data?.orders?.keys?[0].toString()).toString());
+      return ordersModel;
     }, noData: (info) {
       print('no data');
       return null;

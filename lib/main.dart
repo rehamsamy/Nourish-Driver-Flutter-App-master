@@ -14,6 +14,8 @@ void main() async {
   Get.put(SharedPrefService(prefs: pref));
   Get.put(LocalizationService());
   Get.put(ApiProvider());
+   String token = Get.find<SharedPrefService>().getToken() ?? '';
+  Get.log('xx  '+token.toString());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const NourishDriverApp());

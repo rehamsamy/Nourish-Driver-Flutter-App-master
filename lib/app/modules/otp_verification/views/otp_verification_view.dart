@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/check_rest_code_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/auth_apis.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
 
@@ -73,8 +75,17 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
               padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
               child: CustomButton(
                 title: LocalKeys.kContinue.tr,
-                onPress: () {
-                  Get.toNamed(Routes.NEW_PASSWORD);
+                onPress: () async{
+                  CheckRestCodeModel checkModel=await AuthApis().checkRestOtpCode(controller.mobile,int.parse(controller.otp.text));
+                  if(checkModel.data?.error==null){
+                    Get.toNamed(Routes.NEW_PASSWORD,arguments: {
+                      'code':int.parse(controller.otp.text),
+                      'mobile':controller.mobile,
+                    });
+                    Get.snackbar('Success', checkModel.data?.msg??'');
+                  }else{
+                    Get.snackbar('Error', checkModel.data?.message??'');
+                  }
                 },
               ),
             ),

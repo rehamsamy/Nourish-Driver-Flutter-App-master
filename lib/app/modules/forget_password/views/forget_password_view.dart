@@ -64,7 +64,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                   ForgetPasswordModel? login =
                   await AuthApis().forgetPassword(controller.email.text);
                   if (login?.data != null) {
-                    Get.toNamed(Routes.OTP_VERIFICATION);
+                    Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'mobile':controller.email.text});
                     Get.snackbar(
                         "Forget Password",login?.data?.msg??'sucess');
                   } else {

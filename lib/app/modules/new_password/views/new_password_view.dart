@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 import 'package:nourish_driver/app/core/values/assets.dart';
 import 'package:nourish_driver/app/core/values/localization/local_keys.dart';
+import 'package:nourish_driver/app/data/models/check_rest_code_model.dart';
+import 'package:nourish_driver/app/data/models/rest_password_model.dart';
+import 'package:nourish_driver/app/data/remote_data_source/auth_apis.dart';
 import 'package:nourish_driver/app/shared/custom_button.dart';
 import 'package:nourish_driver/app/shared/custom_input.dart';
 import 'package:nourish_driver/routes/app_pages.dart';
@@ -75,8 +78,17 @@ class NewPasswordView extends GetView<NewPasswordController> {
               padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
               child: CustomButton(
                 title: LocalKeys.ksave.tr,
-                onPress: () {
-                  Get.offAllNamed(Routes.LOGIN);
+                onPress: ()  async{
+                  RestPasswordModel? checkModel=await AuthApis().resetPassword(password: controller.password.text,
+                                                                              confirmPassword: controller.rePassword.text,
+                                                                              mobile: controller.mobile??'', code: controller.otp??1111);
+                  if(checkModel?.data?.error==null){
+                    Get.offAllNamed(Routes.LOGIN);
+                    Get.snackbar('Success', checkModel?.data?.msg??'');
+                  }else{
+                    Get.snackbar('Error', checkModel?.data?.message??'');
+                  }
+                  //
                 },
               ),
             ),

@@ -52,109 +52,83 @@ class HomeScreenView extends GetView<HomeScreenController> {
         ),
       ),
       drawer: const MainDrawer(),
-      body: SizedBox(
-        height: Get.height,
-        width: Get.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 24.h,
-            ),
-            SizedBox(
-              width: Get.width,
-              height: 53.h,
-              child: ListView.builder(
-                itemCount: controller.keys?.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  Get.log('size is '+(controller.keys?.length.toString()).toString());
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: index == 0 ? primaryColor : whiteColor,
-                      border: Border.all(color: blueGreyColor),
-                      borderRadius: BorderRadius.circular(7.r),
-                    ),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 7.w),
-                    padding: EdgeInsets.symmetric(horizontal: 12.5.w),
-                    child: Text(
-                      controller.keys?[index]?? "",
-                      style: Get.textTheme.headline3!.copyWith(
-                        color: index == 1 ? whiteColor : blueGreyColor,
-                      ),
-                    ),
-                  );
-                },
+      body:  SizedBox(
+          height: Get.height,
+          width: Get.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 24.h,
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 33.h, bottom: 35.h),
-              width: 374.w,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(10.r),
+              SizedBox(
+                width: Get.width,
+                height: 53.h,
+                child: GetBuilder<HomeScreenController>(
+                          builder:(_)=>ListView.builder(
+                    itemCount:controller.keys?.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: (){
+                          controller.changeIndexKeysListView(index);
+                          controller.getOrdersList();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: index == controller.index ? primaryColor : whiteColor,
+                            border: Border.all(color: blueGreyColor),
+                            borderRadius: BorderRadius.circular(7.r),
+                          ),
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 7.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12.5.w),
+                          child: Text(
+                            controller.keys?[index]?? "",
+                            style: Get.textTheme.headline3!.copyWith(
+                              color: index == controller.index ? whiteColor : blueGreyColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    Assets.kLocationIcon,
-                    width: 78.w,
-                    height: 100.h,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Branch Name Here",
-                          style: Get.textTheme.headline1!
-                              .copyWith(color: whiteColor),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              Assets.kPhoneIcon,
-                              width: 14.w,
-                              height: 14.h,
-                              color: whiteColor,
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.5,
-                              child: InkWell(
-                                onTap: () {
-                                  Clipboard.setData(
-                                    const ClipboardData(text: "96855214755"),
-                                  );
-                                  BotToast.showText(
-                                    text: LocalKeys.kCopiedClipboard.tr,
-                                  );
-                                },
-                                child: Text(
-                                  "+96855214755",
-                                  style: Get.textTheme.bodyText1!
-                                      .copyWith(color: whiteColor),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.h, bottom: 14.h),
-                          child: Row(
+              Container(
+                margin: EdgeInsets.only(top: 33.h, bottom: 35.h),
+                width: 374.w,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      Assets.kLocationIcon,
+                      width: 78.w,
+                      height: 100.h,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Branch Name Here",
+                            style: Get.textTheme.headline1!
+                                .copyWith(color: whiteColor),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Row(
                             children: [
                               SvgPicture.asset(
-                                Assets.kNavigationPointerIcon,
+                                Assets.kPhoneIcon,
                                 width: 14.w,
                                 height: 14.h,
                                 color: whiteColor,
@@ -164,106 +138,125 @@ class HomeScreenView extends GetView<HomeScreenController> {
                               ),
                               SizedBox(
                                 width: Get.width * 0.5,
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        "${LocalKeys.kLocation.tr}: riyadh",
-                                        style: Get.textTheme.bodyText1!
-                                            .copyWith(color: whiteColor),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 7.w,
-                                    ),
-                                    Text(
-                                      LocalKeys.kMap.tr,
-                                      style: Get.textTheme.caption!.copyWith(
-                                        decoration: TextDecoration.underline,
-                                        color: const Color(0xffF4EC64),
-                                        decorationColor:
-                                            const Color(0xffF4EC64),
-                                      ),
-                                    ),
-                                  ],
+                                child: InkWell(
+                                  onTap: () {
+                                    Clipboard.setData(
+                                      const ClipboardData(text: "96855214755"),
+                                    );
+                                    BotToast.showText(
+                                      text: LocalKeys.kCopiedClipboard.tr,
+                                    );
+                                  },
+                                  child: Text(
+                                    "+96855214755",
+                                    style: Get.textTheme.bodyText1!
+                                        .copyWith(color: whiteColor),
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.dialog(ReportProblemDialog());
-                          },
-                          child: Text(
-                            LocalKeys.kReportproblem.tr,
-                            style: Get.textTheme.subtitle1,
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              whiteColor,
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.h, bottom: 14.h),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.kNavigationPointerIcon,
+                                  width: 14.w,
+                                  height: 14.h,
+                                  color: whiteColor,
+                                ),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.5,
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          "${LocalKeys.kLocation.tr}: riyadh",
+                                          style: Get.textTheme.bodyText1!
+                                              .copyWith(color: whiteColor),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 7.w,
+                                      ),
+                                      Text(
+                                        LocalKeys.kMap.tr,
+                                        style: Get.textTheme.caption!.copyWith(
+                                          decoration: TextDecoration.underline,
+                                          color: const Color(0xffF4EC64),
+                                          decorationColor:
+                                              const Color(0xffF4EC64),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 27.w),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        LocalKeys.kAssignedOrders.tr,
-                        style: Get.textTheme.bodyText1,
+                          ElevatedButton(
+                            onPressed: () {
+                              Get.dialog(ReportProblemDialog());
+                            },
+                            child: Text(
+                              LocalKeys.kReportproblem.tr,
+                              style: Get.textTheme.subtitle1,
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                whiteColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      child:ListView.builder(
-                                 itemCount: controller.ordersList?.length,
-                                  itemBuilder: (context, index) {
-                                    return  OrderItem( ordersData: controller.ordersList?[index]);
-                                  },
-                                )
-                      // child: FutureBuilder(
-                      //   future: OrdersApis().getAllOrders(),
-                      //   builder: (_,snapshot){
-                      //     if(snapshot.hasData){
-                      //       List<Data1>? ordersList=snapshot.data as List<Data1>?  ;
-                      //       if(ordersList!.isNotEmpty){
-                      //        return ListView.builder(
-                      //          itemCount: ordersList.length,
-                      //           itemBuilder: (context, index) {
-                      //             return  OrderItem( ordersData: ordersList[index]);
-                      //           },
-                      //         );
-                      //       }else{
-                      //
-                      //         return const SizedBox(
-                      //           child: Center(child: Text('no orders found'),),
-                      //         );
-                      //       }
-                      //     }else{
-                      //       print('vvv3' + snapshot.toString());
-                      //       return  const SizedBox();
-                      //
-                      //     }
-                      //   },
-                      //
-                      // ),
-                    ),
+                    )
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 27.w),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          LocalKeys.kAssignedOrders.tr,
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      GetBuilder<HomeScreenController>(
+                        builder: (_)=> Expanded(
+                          child:getOrdersList()
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
       ),
     );
+  }
+
+  getOrdersList() {
+    List<Data1> ordersList=controller.ordersList ??[];
+    if(ordersList.isNotEmpty) {
+      return ListView.builder(
+        itemCount: controller.ordersList?.length,
+        itemBuilder: (context, index) {
+          return OrderItem(ordersData: controller.ordersList?[index]);
+        },
+      );
+    }else{
+   return SizedBox(child: Center(child:Text('no orders found')),);
+    }
   }
 }
